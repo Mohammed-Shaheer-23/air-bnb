@@ -1,3 +1,31 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
-}
+    "env": {
+      "browser": true,
+      "amd": true,
+      "node": true  // If you're working with Node.js as well
+    },
+    "parserOptions": {
+      "ecmaVersion": 2020  // Use a newer ECMAScript version if needed
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+      "no-console": "off",  // Allow console statements
+      "indent": [
+        "error",
+        "tab"  // Use tabs for indentation
+      ],
+      "linebreak-style": [
+        "error",
+        "unix"  // Consider using 'unix' for cross-platform compatibility
+      ],
+      "quotes": [
+        "error",
+        "single"  // Use single quotes for strings
+      ],
+      "semi": [
+        "error",
+        "always"  // Require semicolons
+      ]
+    }
+  }
+  
