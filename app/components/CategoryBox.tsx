@@ -42,14 +42,13 @@ const CategoryBox: React.FC<CategoryBoxProps> =( {
 
     router.push(url);
 
-    },[]);
+    },[label, params, router]);
     
     
     return (
         <div
+        onClick={handleClick}
         className={`
-            $
-        "
             flex
             flex-col
             items-center
@@ -60,10 +59,9 @@ const CategoryBox: React.FC<CategoryBoxProps> =( {
             hover:text-neutral-800
             transition
             cursor-pointer
-            ${selected ? 'border-b-neutural-800' : 'border-b-transparent'}
+            ${selected ? 'border-b-neutral-800' : 'border-b-transparent'}
             ${selected ? 'text-neutral-800' : 'text-neutral-500'}
-
-        `}
+        `}        
         >
          <Icon size={26} />
             <div className="font-medium text-sm">
