@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useMemo, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -11,7 +11,6 @@ import CategoryInput from "../inputs/CategoryInput";
 import CountrySelect from "../inputs/CountrySelect";
 import dynamic from "next/dynamic";
 import Counter from "../inputs/Counter";
-import ImageUpload from "../inputs/ImageUpload";
 import Input from "../inputs/Input";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -27,6 +26,11 @@ enum STEPS {
 }
 
 const RentModal = () => {
+  const ImageUpload = dynamic(
+    () => import("@/app/components/inputs/ImageUpload"),
+    { ssr: false }
+  );
+
   const rentModal = useRentModal();
   const router = useRouter();
 
@@ -39,7 +43,7 @@ const RentModal = () => {
     setValue,
     watch,
     formState: { errors },
-    reset
+    reset,
   } = useForm<FieldValues>({
     defaultValues: {
       category: "",
@@ -47,11 +51,11 @@ const RentModal = () => {
       guestCount: 1,
       roomCount: 1,
       bathroomCount: 1,
-      imageSrc: '',
+      imageSrc: "",
       price: 1,
       title: "",
       description: "",
-    }
+    },
   });
 
   const category = watch("category");
@@ -61,9 +65,13 @@ const RentModal = () => {
   const bathroomCount = watch("bathroomCount");
   const imageSrc = watch("imageSrc");
 
-  const Map = useMemo(() => dynamic(() => import("../Map"), {
-    ssr: false,
-  }), [location]);
+  const Map = useMemo(
+    () =>
+      dynamic(() => import("../Map"), {
+        ssr: false,
+      }),
+    [location]
+  );
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -88,7 +96,8 @@ const RentModal = () => {
 
     setIsLoading(true);
 
-    axios.post("/api/listings", data)
+    axios
+      .post("/api/listings", data)
       .then(() => {
         toast.success("Listing created!");
         router.refresh();
@@ -98,7 +107,8 @@ const RentModal = () => {
       })
       .catch(() => {
         toast.error("Something went wrong!");
-      }).finally(() => {
+      })
+      .finally(() => {
         setIsLoading(false);
       });
   };
@@ -136,8 +146,7 @@ const RentModal = () => {
         {categories.map((item) => (
           <div key={item.label} className="col-span-1">
             <CategoryInput
-              onClick={(category) =>
-                setCustomValue('category', category)}
+              onClick={(category) => setCustomValue("category", category)}
               selected={category === item.label}
               label={item.label}
               icon={item.icon}
@@ -204,7 +213,7 @@ const RentModal = () => {
         />
         <ImageUpload
           value={imageSrc}
-          onChange={(value) => setCustomValue('imageSrc', value)}
+          onChange={(value) => setCustomValue("imageSrc", value)}
         />
       </div>
     );
