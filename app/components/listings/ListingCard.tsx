@@ -7,6 +7,7 @@ import { Listing, Reservation } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import Image from "next/image";
+import Button from "../Button"
 import HeartButton from "../HeartButton";
 
 interface ListingCardProps {
@@ -99,7 +100,25 @@ const ListingCard: React.FC<ListingCardProps> = ({
           {reservationDate || data.category}
           
         </div>
+        <div className="flex flex-row items-center gap-1">
+          <div className="font-semibold">
+            ${price}
 
+          </div>
+          {!reservation && (
+            <div className="font-light">night</div>
+          )}
+
+        </div>
+        {onAction && actionLabel && (
+          <Button 
+            disabled={disabled}
+            small
+            label={actionLabel}
+            onClick={handleCancel}
+
+          />
+        )}
       </div>
       
     </div>
